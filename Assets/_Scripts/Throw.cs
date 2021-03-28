@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Throw : MonoBehaviour
 {
+    public Text txt;
+    public float velocidadLimit;
     public Transform angle;
     public GameObject ball;
     public float distance_to_screen;
@@ -49,15 +52,20 @@ public class Throw : MonoBehaviour
 
     private void OnMouseUp()
     {
-        rb.isKinematic = false;
         tocando = false;
         velocidad = Vector3.Distance(lastPos, newPos);
         velocidad *= (Time.deltaTime * 100);
+        velocidad = Mathf.Clamp(velocidad, 0, velocidadLimit);
         forceDirection = new Vector3(-(lastPos.x - newPos.x), -(lastPos.y - newPos.y), -(lastPos.z - newPos.z));
-        Debug.Log("velocidad: " + velocidad);
-        Debug.Log("angulo x: " + forceDirection.x + " y: " + forceDirection.y + " z: " + forceDirection.z);
         forceDirection.z = velocidad * poderZ;
         angle.forward = forceDirection;
-        rb.AddForce(forceDirection * velocidad * poder, fmode);
+        Debug.Log("velocidad: " + velocidad);
+        Debug.Log("angulo x: " + forceDirection.x + " y: " + forceDirection.y + " z: " + forceDirection.z);
+        if (velocidad >= 0.06f)
+        {
+            rb.isKinematic = false;
+            rb.AddForce(forceDirection * velocidad * poder, fmode);
+        }
+        txt.text = "vel: " + velocidad;
     }
 }
