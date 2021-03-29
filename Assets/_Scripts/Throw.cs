@@ -53,39 +53,6 @@ public class Throw : MonoBehaviour
         }
     }
 
-    public void t_back()
-    {
-        transformDir = Vector3.back;
-    }
-    public void t_down()
-    {
-        transformDir = Vector3.down;
-    }
-    public void t_forward()
-    {
-        transformDir = Vector3.forward;
-    }
-    public void t_left()
-    {
-        transformDir = Vector3.left;
-    }
-    public void t_one()
-    {
-        transformDir = Vector3.one;
-    }
-    public void t_rigth()
-    {
-        transformDir = Vector3.right;
-    }
-    public void t_up()
-    {
-        transformDir = Vector3.up;
-    }
-    public void t_zero()
-    {
-        transformDir = Vector3.zero;
-    }
-
     private void OnMouseUp()
     {
         tocando = false;

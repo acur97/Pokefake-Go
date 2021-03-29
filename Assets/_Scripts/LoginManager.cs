@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
@@ -407,6 +408,13 @@ public class LoginManager : MonoBehaviour
     private void LoginCorrecto()
     {
         estatusLogin.text = "Logeado";
+        StartCoroutine(CambioEscena());
+    }
+
+    IEnumerator CambioEscena()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        SceneManager.LoadScene(1);
     }
 
     #endregion
