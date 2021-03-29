@@ -1,59 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
-using UnityEngine.UI;
 using TMPro;
-using easyar;
-using UnityEngine.SceneManagement;
 
-public class PokemonsManager : MonoBehaviour
+public class ButtonInfoPokemon : MonoBehaviour
 {
-    private readonly string baseURL = "https://pokeapi.co/api/v2/";
-    public List<int> validChoices;
+    public int index;
+    public Image img;
 
-    public SurfaceTrackerFrameFilter sTracker;
-    public int randomIndex = 0;
-    public TextMeshProUGUI estatus;
-    public TextMeshProUGUI pokeNameText;
+    /*public TextMeshProUGUI pokeNameText;
     public TextMeshProUGUI pokeNumText;
-    public TextMeshProUGUI[] pokeTypeText;
-    public UnityEngine.UI.Image pokeIMG2;
+    public TextMeshProUGUI[] pokeTypeText;*/
+    private Button btn;
 
-    private void Start()
+    private string nombre;
+    private string numero;
+    private string[] tipo = new string[2];
+    private Sprite imagen;
+    private string peso;
+    private string altura;
+    private string experiencia;
+
+    private readonly string baseURL = "https://pokeapi.co/api/v2/";
+
+    private void Awake()
     {
-        GetPokemon();
+        btn = GetComponent<Button>();
+        btn.interactable = false;
+        img.sprite = null;
     }
 
-    public void ResetTarget()
+    public void Preparar()
     {
-        StartCoroutine(ResetTargetS());
+        StartCoroutine(GetPokeIndex());
     }
 
-    IEnumerator ResetTargetS()
+    public void clic()
     {
-        sTracker.enabled = false;
-        yield return new WaitForSecondsRealtime(0.25f);
-        sTracker.enabled = true;
+        //Debug.Log(index);
+        //pantalla info
+        PokemonInfo._pokeInfo.AbrirInfo(nombre, numero, tipo, imagen, peso, altura, experiencia);
     }
 
-    public void GetPokemon()
-    {
-        pokeIMG2.sprite = null;
-        validChoices = PokemonsData._PokeData.IndexLibres;
-        randomIndex = Random.Range(1, PokemonsData._PokeData.IndexLibres.Count);
-        pokeNumText.text = randomIndex.ToString();
-
-        estatus.text = "Cargando...";
-        StartCoroutine(GetPokeIndex(randomIndex));
-    }
-
-    IEnumerator GetPokeIndex(int pokeindex)
+    IEnumerator GetPokeIndex()
     {
         ///get poke info
 
-        string pokeURL = baseURL + "pokemon/" + pokeindex.ToString();
+        string pokeURL = baseURL + "pokemon/" + index.ToString();
 
         UnityWebRequest pokeinforequest = UnityWebRequest.Get(pokeURL);
 
@@ -63,7 +59,6 @@ public class PokemonsManager : MonoBehaviour
             || pokeinforequest.result == UnityWebRequest.Result.DataProcessingError
             || pokeinforequest.result == UnityWebRequest.Result.ProtocolError)
         {
-            estatus.text = "F";
             Debug.Log(pokeinforequest.error);
             yield break;
         }
@@ -103,25 +98,38 @@ public class PokemonsManager : MonoBehaviour
         img2d.filterMode = FilterMode.Point;
         //pokeIMG.texture = img2d;
 
-        pokeIMG2.sprite = Sprite.Create(img2d, new Rect(0, 0, img2d.width, img2d.height), new Vector2(0.5f, 0.5f));
+        img.sprite = Sprite.Create(img2d, new Rect(0, 0, img2d.width, img2d.height), new Vector2(0.5f, 0.5f));
 
-        pokeNameText.text = Mayuscula(pokeName);
-
-        for (int i = 0; i < poketypesNames.Length; i++)
+        /*if (pokeNameText != null)
         {
-            pokeTypeText[i].text = Mayuscula(poketypesNames[i]);
+            pokeNameText.text = Mayuscula(pokeName);
         }
 
-        estatus.text = "";
+        if (pokeTypeText[0] != null)
+        {
+            for (int i = 0; i < poketypesNames.Length; i++)
+            {
+                pokeTypeText[i].text = Mayuscula(poketypesNames[i]);
+            }
+        }*/
+
+        nombre = Mayuscula(pokeName);
+        numero = index.ToString();
+        for (int i = 0; i < poketypesNames.Length; i++)
+        {
+            tipo[i] = Mayuscula(poketypesNames[i]);
+        }
+        //tipo[0] = Mayuscula(poketypesNames[0]);
+        //tipo[1] = Mayuscula(poketypesNames[1]);
+        imagen = img.sprite;
+        peso = pokeinfo["weight"];
+        altura = pokeinfo["height"] + "´";
+        experiencia = pokeinfo["base_experience"];
+        btn.interactable = true;
     }
 
     private string Mayuscula(string txt)
     {
         return char.ToUpper(txt[0]) + txt.Substring(1);
-    }
-
-    public void ScenaPokedex()
-    {
-        SceneManager.LoadScene(2);
     }
 }

@@ -8,9 +8,11 @@ using TMPro;
 
 public class RestApiPokeTest : MonoBehaviour
 {
+    public PokemonsData _pokeData;
+    [Space]
     public Button btn;
     public Image pokeIMG2;
-    public RawImage pokeIMG;
+    //public RawImage pokeIMG;
     public TextMeshProUGUI pokeNameText;
     public TextMeshProUGUI pokeNumText;
     public TextMeshProUGUI pokeTypesNum;
@@ -20,8 +22,10 @@ public class RestApiPokeTest : MonoBehaviour
 
     private void Start()
     {
+        _pokeData = PokemonsData._PokeData;
+
         pokeIMG2.sprite = null;
-        pokeIMG.texture = Texture2D.blackTexture;
+        //pokeIMG.texture = Texture2D.blackTexture;
 
         pokeNameText.text = "";
         pokeNumText.text = "";
@@ -39,7 +43,7 @@ public class RestApiPokeTest : MonoBehaviour
         //int randomIndex = 899;
 
         pokeIMG2.sprite = null;
-        pokeIMG.texture = Texture2D.blackTexture;
+        //pokeIMG.texture = Texture2D.blackTexture;
 
         pokeNameText.text = "cargando";
         pokeNumText.text = randomIndex.ToString();
@@ -106,7 +110,7 @@ public class RestApiPokeTest : MonoBehaviour
 
         Texture2D img2d = DownloadHandlerTexture.GetContent(pokeIMGrequest);
         img2d.filterMode = FilterMode.Point;
-        pokeIMG.texture = img2d;
+        //pokeIMG.texture = img2d;
 
         pokeIMG2.sprite = Sprite.Create(img2d, new Rect(0, 0, img2d.width, img2d.height), new Vector2(0.5f, 0.5f));
 

@@ -60,6 +60,7 @@ public class Pokeball : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(tiempoEsperaDecision);
         estatus.text = "El Pokemon ha sido capturado!";
+        Debug.Log(PokeManager.randomIndex);
         PokemonsData._PokeData.IndexPokemon.Add(PokeManager.randomIndex);
         PokemonsData._PokeData.IndexLibres.Remove(PokeManager.randomIndex);
         Debug.Log("lista quedo con: " + PokemonsData._PokeData.IndexPokemon.Count);
