@@ -29,8 +29,6 @@ public class LoginManager : MonoBehaviour
     public Button Btn_Login;
     public TextMeshProUGUI estatusLogin;
 
-    public GameObject olvido;
-
     [Header("Firebase")]
     private readonly string FirebaseURL = "https://pokefake-go-default-rtdb.firebaseio.com/";
     private readonly string FirebaseKey = "xTlR9Su6uBGOmoMlAHaHXrydQtlY4PZAaM5jqqPs";
@@ -41,7 +39,6 @@ public class LoginManager : MonoBehaviour
         seleccion.SetActive(true);
         registro.SetActive(false);
         login.SetActive(false);
-        olvido.SetActive(false);
 
         Btn_continuarRegistro.interactable = false;
         Btn_listoRegistro.interactable = false;
@@ -276,7 +273,7 @@ public class LoginManager : MonoBehaviour
         else
         {
             StopAllCoroutines();
-            estatusRegistro.text = "Usuario ya registrado!";
+            estatusRegistro.text = "Usuario ya registrado";
         }
     }
 
@@ -336,7 +333,7 @@ public class LoginManager : MonoBehaviour
 
     public void Login()
     {
-        estatusLogin.text = "Cargando";
+        estatusLogin.text = "Comprobando...";
         StartCoroutine(LoginUsuario());
     }
     IEnumerator LoginUsuario()
