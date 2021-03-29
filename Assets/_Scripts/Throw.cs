@@ -68,7 +68,10 @@ public class Throw : MonoBehaviour
         //forceDirection = transform.TransformVector(forceDirection);
         //Debug.Log("velocidad: " + velocidad);
 
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#else
         if (velocidad >= 0.06f)
+#endif
         {
             rb.isKinematic = false;
             rb.AddRelativeForce(forceDirection, fmode);
