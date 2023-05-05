@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Login.unity
     guid: f8f43da690af8b1409930cad9a89c915
   - enabled: 1
@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Scenes/SurfaceTracking - Trow test Windows.unity
     guid: 29d9671db051e914eabc94c5ff47ece2
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/PokeApiDex.unity
     guid: fda9c5b70e1e1fe43993c253eca8bf55
   m_configObjects:
